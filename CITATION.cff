@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this simulator, please cite this software release."
+title: "HOCCA-Simulator: reference environment for communication-constrained cooperative multi-UAV search"
+abstract: >-
+  A dependency-light reference environment for cooperative multi-UAV search with
+  budgeted evidence sharing. It provides a 48 x 48 grid with 16 targets of which
+  4 are mobile, 4 unit-speed UAVs with turn commands on a 12-heading lattice, a
+  Euclidean disk sensor with a configurable detection and false-alarm
+  probability, a log-odds occupancy filter, provenance-tagged evidence with
+  once-only fusion, a value-of-information scheduler under a hard item budget,
+  potential shaping with differential information credit, evaluation metrics, a
+  rule-based controller and a Gymnasium-compatible interface.
+version: "1.0.0"
+date-released: "2026-01-01"
+license: MIT
+repository-code: "https://github.com/wkx12138-w/HOCCASim"
+keywords:
+  - multi-uav
+  - cooperative-search
+  - multi-agent-reinforcement-learning
+  - option-critic
+  - value-of-information
+  - communication-budget
+  - bayesian-occupancy-filter
+authors:
+  - name: "HOCCA authors"

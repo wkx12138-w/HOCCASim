@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hocca-sim"
+version = "1.0.0"
+description = "Reference simulator for HOCCA: communication-constrained cooperative multi-UAV search"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "HOCCA authors" }]
+keywords = [
+    "multi-uav", "cooperative-search", "multi-agent-reinforcement-learning",
+    "option-critic", "value-of-information", "communication-budget",
+    "bayesian-occupancy-filter", "gymnasium", "simulation",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = ["numpy>=1.21"]
+
+[project.optional-dependencies]
+plots = ["matplotlib>=3.5"]
+yaml = ["PyYAML>=5.4"]
+gym = ["gymnasium>=0.29"]
+full = ["matplotlib>=3.5", "PyYAML>=5.4", "gymnasium>=0.29"]
+dev = ["matplotlib>=3.5", "PyYAML>=5.4", "gymnasium>=0.29"]
+
+[project.urls]
+Homepage = "https://github.com/wkx12138-w/HOCCASim"
+Source = "https://github.com/wkx12138-w/HOCCASim"
+Issues = "https://github.com/wkx12138-w/HOCCASim/issues"
+
+[project.scripts]
+hocca-sim = "hocca_sim.cli:main"
+
+[tool.setuptools]
+packages = ["hocca_sim", "hocca_sim.policies"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

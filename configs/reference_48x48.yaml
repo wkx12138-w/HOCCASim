@@ -1,0 +1,102 @@
+# ---------------------------------------------------------------------------
+# HOCCA reference environment (reference parameter table)
+#
+#   python scripts/run_episode.py --config configs/reference_48x48.yaml
+#   from hocca_sim import SimConfig; SimConfig.from_file("configs/reference_48x48.yaml")
+#
+# Every value below is part of the reference design.  Fields the design leaves
+# open are marked RECONSTRUCTED in hocca_sim/config.py together with the reason
+# for the chosen default.
+# ---------------------------------------------------------------------------
+schema_version: "1.0"
+method: HOCCA
+description: >
+  48 x 48 grid, 16 targets (12 static + 4 moving), 4 UAVs, p_D = 0.90,
+  p_FA = 0.02, R_s = 3, B = 2 messages of m = 8 evidence items per UAV-step,
+  260-step horizon.
+
+grid:
+  size: 48
+  boundary: clamp          # RECONSTRUCTED: boundary rule is unspecified
+  allow_target_overlap: true
+
+sensing:
+  radius: 3.0              # R_s
+  p_detect: 0.90           # p_D
+  p_false_alarm: 0.02      # p_FA
+
+uavs:
+  count: 4                 # N
+  speed: 1.0               # unit speed
+  turn_actions_deg: [-30.0, 0.0, 30.0]
+  heading_bins: 12
+  heading_strategy: centripetal   # RECONSTRUCTED: initial_pose_heading_distribution
+  energy_initial: 1.0            # RECONSTRUCTED (unused while energy_per_step = 0)
+  energy_per_step: 0.0
+  min_separation: 0.0
+  allow_hover: false
+
+targets:
+  count: 16                # K
+  moving_count: 4
+  hop_period: 20           # T_m
+  move_prob: 0.25          # p_m
+  layout: random           # "reference" reproduces figures/fig_setup.pdf exactly
+
+comm:
+  packets_per_step: 2      # B
+  items_per_packet: 8      # m -> Q = B * m = 16 items per UAV-step
+  positive_net_score_only: true
+  bit_cost_lambda: 0.05    # RECONSTRUCTED: unspecified by the design
+  item_cost: 1.0
+  replay_window: 8         # RECONSTRUCTED: W = 8 (round-two draft design)
+  allow_self_loop: false
+  packet_loss: 0.0
+  delay_steps: 0
+  header_bytes: 8
+  item_bytes: 16
+  ack_id_bytes: 8
+  ack_header_bytes: 8
+
+belief:
+  mode: map                # single occupancy map with a representative kernel
+  confirm_log_odds: 5.0    # RECONSTRUCTED: confirmation_threshold_log_odds
+  clip: 1.0e-9
+  log_odds_clip: 1000000.0
+  predict_every_hop: true
+  mass_normalisation: false
+
+reward:
+  lambda_H: 1.0            # entropy
+  lambda_D: 25.0           # confirmed detections
+  lambda_R: 1.5            # revisits
+  lambda_C: 0.3            # communication
+  lambda_E: 0.02           # energy
+  lambda_F: 0.2            # spatial balance
+  lambda_A: 0.5            # RECONSTRUCTED: differential_credit_lambda_A
+  coverage_coef: 0.09      # RECONSTRUCTED: coverage_reward_coefficient
+  revisit_window: 12
+  revisit_normalisation: fraction
+  communication_normalisation: budget_fraction
+  boundary_penalty: 0.05   # RECONSTRUCTED
+  collision_penalty: 0.5   # RECONSTRUCTED
+  spatial_balance_mode: quadratic
+  gamma: 0.99
+  differential_credit: true
+  credit_order: random
+  potential_belief: team
+
+episode:
+  horizon: 260
+  terminate_on_all_confirmed: true   # RECONSTRUCTED: consistent with Moves = N * T_all
+
+observation:
+  mode: local
+  window: 15
+  include_belief: true
+  include_visited: true
+  include_evidence: true
+  include_neighbour_mask: true
+  include_option_state: true
+
+seed: 0

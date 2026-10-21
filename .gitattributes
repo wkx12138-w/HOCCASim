@@ -1,0 +1,17 @@
+# Normalise line endings so the repository is consistent across platforms.
+* text=auto eol=lf
+
+# Source
+*.py   text eol=lf
+*.md   text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+*.toml text eol=lf
+*.txt  text eol=lf
+*.cff  text eol=lf
+
+# Binary artefacts
+*.png  binary
+*.gif  binary
+*.pdf  binary
+*.zip  binary

@@ -1,0 +1,9 @@
+# Runtime dependencies of the HOCCA reference simulator.
+#
+# Only NumPy is mandatory.  matplotlib is required for figures, PyYAML for the
+# YAML configuration files, gymnasium for the Gymnasium wrapper; the simulator
+# runs without any of the three.
+numpy>=1.21
+matplotlib>=3.5        # figures, animation
+PyYAML>=5.4            # configs/*.yaml
+gymnasium>=0.29        # optional Gymnasium integration
